@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil Personnalisé</title>
+    <style>
+        /* Styles de base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* En-tête avec date et heure */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .date-time {
+            font-size: 0.8em;
+            color: #fff;
+            background-color: #ff8c00;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        /* Conteneur principal */
+        main {
+            padding: 15px;
+        }
+        
+        /* Conteneur flex pour la mise en page */
+        .search-container {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        
+        /* Colonne des moteurs de recherche */
+        .search-column {
+            flex: 2;
+        }
+        
+        /* Colonne des raccourcis */
+        .shortcuts-column {
+            flex: 1;
+        }
+        
+        /* Boîte de recherche */
+        .search-box {
+            margin-bottom: 10px;
+        }
+        
+        .search-box form {
+            display: flex;
+        }
+        
+        .search-box input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 14px;
+        }
+        
+        .search-box input:focus {
+            border-color: #4285f4;
+            outline: none;
+        }
+        
+        .search-box button {
+            padding: 10px 15px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .search-box button:hover {
+            background-color: #3367d6;
+        }
+        
+        /* Grille des raccourcis - Favicons seulement - TAILLE RÉDUITE */
+        .favicons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2px; /* Espacement réduit */
+            background-color: white;
+            padding: 1px; /* Padding réduit */
+            border-radius: 1px;
+            height: fit-content;
+        }
+        
+        .favicons a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            padding: 2px; /* Padding réduit */
+            border-radius: 10px;
+            transition: background-color 0.2s;
+            aspect-ratio: 2/1;
+        }
+        
+        .favicons a:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .favicons img {
+            width: 24px; /* Taille réduite des favicons */
+            height: 24px; /* Taille réduite des favicons */
+        }
+        
+        /* Section des flux RSS */
+        #rss-feeds {
+            width: 100%;
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .rss-item {
+            margin-bottom: 10px;
+            padding: 15px;
+            background-color: white;
+            border-left: 4px solid #ff8c00;
+            border-radius: 4px;
+        }
+        
+        .rss-item a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .rss-item a:hover {
+            color: #ff8c00;
+        }
+        
+        .rss-source-label {
+            display: block;
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .rss-description {
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: #444;
+        }
+        
+        /* Media queries pour la responsivité */
+        @media (max-width: 1200px) {
+            .favicons {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .favicons {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .favicons {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .favicons {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .favicons {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .search-box form {
+                flex-direction: column;
+            }
+            
+            .search-box input {
+                border-radius: 4px;
+                margin-bottom: 5px;
+            }
+            
+            .search-box button {
+                border-radius: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- En-tête avec date et heure -->
+    <header>
+        <div id="date-time" class="date-time">Chargement...</div>
+    </header>
+    
+    <!-- Contenu principal -->
+    <main>
+        <!-- Conteneur flex pour la mise en page -->
+        <div class="search-container">
+            <!-- Colonne de gauche : Moteurs de recherche -->
+            <div class="search-column">
+                <!-- Première barre de recherche Google -->
+                <div class="search-box">
+                    <form id="google-search">
+                        <input type="text" id="search-input" placeholder="Rechercher sur Google">
+                        <button type="submit">Rechercher</button>
+                    </form>
+                </div>
+                
+                <!-- Deuxième barre de recherche spécialisée -->
+                <div class="search-box">
+                    <form id="special-search">
+                        <input type="text" id="search-input-2" placeholder="Rechercher de champion R.S.L. sur Hellhades, Ayumilove.">
+                        <button type="submit">Rechercher</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Colonne de droite : Raccourcis vers les sites (favicons seulement) -->
+            <div class="shortcuts-column">
+                <div class="favicons">
+                    <!-- 10 raccourcis avec favicons seulement -->
+                     <a href="https://github.com/" target="_blank" title="Github">
+                        <img src="https://www.google.com/s2/favicons?sz=32&domain=github.com" alt="Github">
+                    </a>
+                    <a href="https://www.youtube.com" target="_blank" title="YouTube">
+                        <img src="https://www.google.com/s2/favicons?sz=32&domain=youtube.com" alt="YouTube">
+                    </a>
+                    <a href="https://www.developpez.com" target="_blank" title="Developpez">
+                        <img src="https://www.google.com/s2/favicons?sz=32&domain=developpez.com" alt="Developpez">
+                    </a>
+                    <a href="https://gemini.google.com/app" target="_blank" title="Twitter">
+                        <img src="https://www.google.com/s2/favicons?sz=32&domain=gemini.com" alt="Twitter">
+                    </a>
+                    <a href="https://www.wikipedia.org" target="_blank" title="Wikipedia">
+                        <img src="https://www.google.com/s2/favicons?sz=32&domain=wikipedia.org" alt="Wikipedia">
+                    </a>
+                    <a href="https://www.reddit.com" target="_blank" title="Reddit">
+                        <img src="https://www.google.com/s2/favicons?sz=32&domain=reddit.com" alt="Reddit">
+                    </a>
+                    <a href="https://www.amazon.fr" target="_blank" title="Amazon">
+                        <img src="https://www.google.com/s2/favicons?sz=32&domain=amazon.fr" alt="Amazon">
+                    </a>
+                               
+                    <a href="https://www.stackoverflow.com" target="_blank" title="StackOverflow">
+                        <img src="https://www.google.com/s2/favicons?sz=32&domain=stackoverflow.com" alt="StackOverflow">
+                    </a>
+                    
+                    <a href="https://openweathermap.org/city/6437298" target="_blank" title="Météo">
+                        <img src="https://www.google.com/s2/favicons?sz=32&domain=meteocast.net" alt="Météo">
+                    </a>
+                    
+                    <a href="https://chat.deepseek.com/" target="_blank" title="DeepSeek">
+                        <img src="https://www.google.com/s2/favicons?sz=32&domain=deepseek.com" alt="DeepSeek">
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section des flux RSS -->
+        <ul id="rss-feeds">
+            <li class="rss-item">
+                Chargement des actualités...
+            </li>
+        </ul>
+    </main>
+    
+    <!-- Script JavaScript -->
+    <script>
+        // ===================================================================
+        // FONCTIONNALITÉS DE RECHERCHE
+        // ===================================================================
+        
+        // Recherche Google
+        document.getElementById('google-search').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const searchTerm = document.getElementById('search-input').value.trim();
+            
+            if (searchTerm) {
+                window.open(`https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`, '_blank');
+                document.getElementById('search-input').value = '';
+            }
+        });
+
+        // Recherche multi-sites (Hellhades, Ayumilove, Alucare)
+        document.getElementById('special-search').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const query = document.getElementById('search-input-2').value.trim();
+            
+            if (!query) return;
+            
+            const encodedQuery = encodeURIComponent(query);
+            const newWindow = window.open('', '_blank');
+
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="fr">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Résultats de recherche pour "${query}"</title>
+                        <style>
+                            body, html {
+                                margin: 0;
+                                padding: 0;
+                                height: 100%;
+                                overflow: hidden;
+                                font-family: Arial, sans-serif;
+                            }
+                            .results-container {
+                                display: flex;
+                                height: 100vh;
+                                width: 100vw;
+                            }
+                            .result-panel {
+                                flex: 1;
+                                border-right: 1px solid #ccc;
+                                height: 100%;
+                                overflow: auto;
+                            }
+                            .result-panel:last-child {
+                                border-right: none;
+                            }
+                            .site-label {
+                                position: sticky;
+                                top: 0;
+                                background-color: #f9f9f9;
+                                padding: 5px;
+                                text-align: center;
+                                border-bottom: 1px solid #ccc;
+                                font-weight: bold;
+                                z-index: 10;
+                            }
+                            iframe {
+                                width: 100%;
+                                height: calc(100% - 30px);
+                                border: none;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="results-container">
+                            <div class="result-panel">
+                                <div class="site-label">hellhades.com</div>
+                                <iframe src="https://hellhades.com/?s=${encodedQuery}"></iframe>
+                            </div>
+                            <div class="result-panel">
+                                <div class="site-label">ayumilove.net</div>
+                                <iframe src="https://ayumilove.net/?s=${encodedQuery}"></iframe>
+                            </div>
+                            <div class='result-panel'>
+                                <div class='site-label'>alucare.fr</div>
+                                <iframe src='https://www.alucare.fr/?s=${encodedQuery}'></iframe>
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+                
+                document.getElementById('search-input-2').value = '';
+            } else {
+                alert("Le navigateur a bloqué l'ouverture d'une nouvelle fenêtre. Veuillez désactiver le bloqueur de pop-up pour ce site.");
+            }
+        });
+
+        // ===================================================================
+        // AFFICHAGE DE LA DATE ET DE L'HEURE
+        // ===================================================================
+        
+        function updateDateTime() {
+            const dateTimeElement = document.getElementById('date-time');
+            const currentDate = new Date();
+            
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: 'numeric', 
+                minute: 'numeric', 
+                second: 'numeric' 
+            };
+            
+            dateTimeElement.textContent = currentDate.toLocaleDateString('fr-FR', options);
+        }
+        
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // ===================================================================
+        // GESTION DES FLUX RSS
+        // ===================================================================
+        
+        const feedsToLoad = [
+            { name: "Korben", url: "https://korben.info/feed" },
+            { name: "Developpez.com", url: "https://www.developpez.com/index/rss" }
+        ];
+
+        async function fetchRss(feed) {
+            const proxyUrl = 'https://api.allorigins.win/raw?url=';
+            const finalUrl = proxyUrl + encodeURIComponent(feed.url);
+
+            try {
+                const response = await fetch(finalUrl);
+                if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
+                
+                const text = await response.text();
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(text, "text/xml");
+                const items = Array.from(xmlDoc.querySelectorAll("item"));
+                
+                return items.map(item => {
+                    const title = item.querySelector("title")?.textContent || "Sans titre";
+                    const link = item.querySelector("link")?.textContent || "#";
+                    const description = item.querySelector("description")?.textContent || "";
+                    
+                    return {
+                        title,
+                        link,
+                        description,
+                        source: feed.name,
+                        pubDate: new Date(item.querySelector("pubDate")?.textContent || Date.now())
+                    };
+                }).filter(item => item.title && item.link);
+                
+            } catch (error) {
+                console.error(`Erreur lors de la récupération du flux ${feed.name}:`, error);
+                return null;
+            }
+        }
+
+        async function loadAndDisplayFeeds() {
+            const rssFeedList = document.getElementById('rss-feeds');
+            rssFeedList.innerHTML = '<li class="rss-item">Chargement des actualités...</li>';
+
+            try {
+                const allItems = [];
+                for (const feed of feedsToLoad) {
+                    const items = await fetchRss(feed);
+                    if (items) allItems.push(items);
+                }
+
+                const mergedItems = [];
+                const maxItemsPerFeed = Math.max(...allItems.map(items => items.length));
+                
+                for (let i = 0; i < maxItemsPerFeed; i++) {
+                    for (const feedItems of allItems) {
+                        if (feedItems[i]) mergedItems.push(feedItems[i]);
+                    }
+                }
+
+                rssFeedList.innerHTML = '';
+                const maxItems = Math.min(mergedItems.length, 10);
+                
+                for (let i = 0; i < maxItems; i++) {
+                    const item = mergedItems[i];
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('rss-item');
+                    
+                    listItem.innerHTML = `
+                        <a href="${item.link}" target="_blank"><strong>${item.title}</strong></a>
+                        <span class="rss-source-label">Source : ${item.source}</span>
+                        ${item.description ? `<p class="rss-description">${item.description}</p>` : ''}
+                    `;
+                    
+                    rssFeedList.appendChild(listItem);
+                }
+
+                if (mergedItems.length === 0) {
+                    rssFeedList.innerHTML = `
+                        <li class="rss-item">
+                            Impossible de charger les flux RSS. Veuillez vérifier votre connexion ou essayer un autre service proxy.
+                        </li>
+                    `;
+                }
+                
+            } catch (error) {
+                console.error("Erreur lors du chargement des flux:", error);
+                rssFeedList.innerHTML = `
+                    <li class="rss-item">
+                        Une erreur s'est produite lors du chargement des actualités.
+                    </li>
+                `;
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadAndDisplayFeeds);
+    </script>
+</body>
+</html>
