@@ -131,24 +131,49 @@
         /* Section Chuck Norris */
         #chuck-norris-fact {
             margin: 20px 0;
-            padding: 15px;
-            background-color: #fff8e1;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff8e1, #ffe0b2);
             border-left: 4px solid #ff8c00;
-            border-radius: 4px;
+            border-radius: 8px;
             font-style: italic;
             text-align: center;
             position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         #chuck-norris-fact .refresh {
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background: none;
+            top: 10px;
+            right: 10px;
+            background: #ff8c00;
+            color: white;
             border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
             font-size: 1.2em;
             cursor: pointer;
-            color: #d32f2f;
+            transition: background-color 0.3s;
+        }
+        
+        #chuck-norris-fact .refresh:hover {
+            background: #e67c00;
+        }
+        
+        #chuck-norris-fact p {
+            margin: 0;
+            font-size: 1.1em;
+            line-height: 1.5;
+            color: #2c5aa0; /* Bleu foncé - changez cette couleur */
+        }
+        
+        .citation-info {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            font-size: 0.8em;
+            color: #666;
+            font-style: normal;
         }
         
         /* Section des flux RSS */
@@ -211,6 +236,10 @@
             .favicons {
                 grid-template-columns: repeat(5, 1fr);
             }
+            
+            #chuck-norris-fact {
+                padding: 15px;
+            }
         }
         
         @media (max-width: 600px) {
@@ -235,6 +264,14 @@
             
             .search-box button {
                 border-radius: 4px;
+            }
+            
+            #chuck-norris-fact {
+                padding: 10px;
+            }
+            
+            #chuck-norris-fact p {
+                font-size: 1em;
             }
         }
     </style>
@@ -313,6 +350,7 @@
         <div id="chuck-norris-fact">
             <button class="refresh" title="Nouvelle citation">↻</button>
             <p>Chargement de la sagesse de Chuck Norris...</p>
+            <div class="citation-info">Citation: <span id="fact-counter">-</span> / <span id="total-facts">-</span></div>
         </div>
         
         <!-- Section des flux RSS -->
@@ -325,6 +363,174 @@
     
     <!-- Script JavaScript -->
     <script>
+        // ===================================================================
+        // GESTION AVANCÉE DES CITATIONS CHUCK NORRIS
+        // ===================================================================
+        
+        let allChuckNorrisFacts = [];
+        let usedFactsIndices = new Set();
+        let currentFactIndex = -1;
+        
+        // Citations Chuck Norris intégrées - REMPLACEZ par vos 6000 citations
+        const embeddedFacts = [
+            "Chuck Norris peut diviser par zéro.",
+            "Chuck Norris a déjà compté jusqu'à l'infini. Deux fois.",
+            "Quand Chuck Norris fait des push-ups, ce n'est pas lui qui bouge, il pousse la terre vers le bas.",
+            "Chuck Norris est en couleur sur les photos noir et blanc.",
+            "Chuck Norris peut claquer une porte tournante.",
+            "Chuck Norris ne dort pas. Il attend.",
+            "La mort avait une expérience de mort imminente quand elle a rencontré Chuck Norris.",
+            "Chuck Norris fait pleurer les oignons.",
+            "Chuck Norris a gagné une partie de Monopoly en seulement 4 coups.",
+            "Chuck Norris peut faire griller du pain à la main.",
+            "Chuck Norris a déjà joué à cache-cache avec un fantôme. Le fantôme n'est jamais revenu.",
+            "Quand Chuck Norris regarde dans un miroir, le miroir a peur.",
+            "Chuck Norris peut charger un iPhone avec un Android.",
+            "Chuck Norris a déjà serré la main du diable. Le diable s'est excusé.",
+            "Chuck Norris connaît la dernière décimale de Pi.",
+            "Chuck Norris peut faire fondre de la glace en la regardant fixement.",
+            "Quand Chuck Norris entre dans un magasin, les articles ont peur et se vendent tout seuls.",
+            "Chuck Norris a déjà gagné une partie de poker avec 2 dés et un joker.",
+            "Chuck Norris n'utilise pas de GPS. Le GPS utilise Chuck Norris.",
+            "Chuck Norris peut charger son téléphone en le branchant sur une orange.",
+            "Chuck Norris a déjà fait un slam dunk sur un panier de basket de 12 pieds.",
+            "Chuck Norris peut voir l'angle mort d'un cercle.",
+            "Chuck Norris a déjà gagné au solitaire avec un jeu de cartes incomplet.",
+            "Chuck Norris peut allumer un feu avec de la glace.",
+            "Chuck Norris a déjà battu un mur au bras de fer."
+        ];
+
+        // Variables globales
+        let allChuckNorrisFacts = [];
+        let usedFactsIndices = new Set();
+        let currentFactIndex = -1;
+
+        // Fonction pour mélanger un tableau (algorithme Fisher-Yates)
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Fonction pour obtenir un index aléatoire non utilisé
+        function getRandomUnusedIndex() {
+            if (usedFactsIndices.size >= allChuckNorrisFacts.length) {
+                // Tous les faits ont été utilisés, on remet à zéro
+                usedFactsIndices.clear();
+                console.log("Toutes les citations ont été vues ! Remise à zéro.");
+            }
+            
+            const availableIndices = [];
+            for (let i = 0; i < allChuckNorrisFacts.length; i++) {
+                if (!usedFactsIndices.has(i)) {
+                    availableIndices.push(i);
+                }
+            }
+            
+            if (availableIndices.length === 0) {
+                return Math.floor(Math.random() * allChuckNorrisFacts.length);
+            }
+            
+            return availableIndices[Math.floor(Math.random() * availableIndices.length)];
+        }
+
+        async function loadChuckNorrisFact() {
+            try {
+                // Chargement initial des faits depuis le fichier JSON
+                if (allChuckNorrisFacts.length === 0) {
+                    console.log("Chargement du fichier ChuckNorrisFacts.json...");
+                    
+                    const response = await fetch('ChuckNorrisFacts.json');
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erreur HTTP: ${response.status} - ${response.statusText}`);
+                    }
+                    
+                    const jsonData = await response.json();
+                    
+                    // Détection automatique du format JSON
+                    if (Array.isArray(jsonData)) {
+                        // Format: ["citation1", "citation2", ...]
+                        allChuckNorrisFacts = jsonData;
+                    } else if (jsonData.facts && Array.isArray(jsonData.facts)) {
+                        // Format: {"facts": ["citation1", "citation2", ...]}
+                        allChuckNorrisFacts = jsonData.facts;
+                    } else if (jsonData.citations && Array.isArray(jsonData.citations)) {
+                        // Format: {"citations": ["citation1", "citation2", ...]}
+                        allChuckNorrisFacts = jsonData.citations;
+                    } else if (jsonData.data && Array.isArray(jsonData.data)) {
+                        // Format: {"data": ["citation1", "citation2", ...]}
+                        allChuckNorrisFacts = jsonData.data;
+                    } else {
+                        // Chercher le premier tableau dans l'objet JSON
+                        const firstArray = Object.values(jsonData).find(value => Array.isArray(value));
+                        if (firstArray) {
+                            allChuckNorrisFacts = firstArray;
+                        } else {
+                            throw new Error('Format JSON non reconnu - aucun tableau de citations trouvé');
+                        }
+                    }
+                    
+                    // Nettoyer et filtrer les citations
+                    allChuckNorrisFacts = allChuckNorrisFacts
+                        .filter(fact => fact && typeof fact === 'string' && fact.trim().length > 10)
+                        .map(fact => fact.trim());
+                    
+                    if (allChuckNorrisFacts.length === 0) {
+                        throw new Error('Aucune citation valide trouvée dans le fichier JSON');
+                    }
+                    
+                    console.log(`${allChuckNorrisFacts.length} citations chargées depuis ChuckNorrisFacts.json`);
+                }
+                
+                // Sélectionner une citation non utilisée
+                currentFactIndex = getRandomUnusedIndex();
+                usedFactsIndices.add(currentFactIndex);
+                
+                const selectedFact = allChuckNorrisFacts[currentFactIndex];
+                displayFact(selectedFact, currentFactIndex + 1, allChuckNorrisFacts.length);
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement des citations Chuck Norris:', error);
+                
+                // En cas d'erreur, utiliser les citations de secours
+                if (allChuckNorrisFacts.length === 0) {
+                    console.log("Utilisation des citations de secours intégrées");
+                    allChuckNorrisFacts = [...embeddedFacts];
+                    usedFactsIndices.clear();
+                }
+                
+                if (allChuckNorrisFacts.length > 0) {
+                    currentFactIndex = getRandomUnusedIndex();
+                    usedFactsIndices.add(currentFactIndex);
+                    const selectedFact = allChuckNorrisFacts[currentFactIndex];
+                    displayFact(selectedFact, currentFactIndex + 1, allChuckNorrisFacts.length);
+                } else {
+                    displayFact(`Erreur: ${error.message}. Vérifiez que le fichier ChuckNorrisFacts.json existe et est accessible.`, 0, 0);
+                }
+            }
+        }
+
+        function displayFact(fact, currentNumber, total) {
+            const factElement = document.getElementById('chuck-norris-fact');
+            const factCounterElement = document.getElementById('fact-counter');
+            const totalFactsElement = document.getElementById('total-facts');
+            
+            // Mettre à jour le contenu
+            factElement.querySelector('p').textContent = fact;
+            factCounterElement.textContent = currentNumber;
+            totalFactsElement.textContent = total;
+            
+            // Réattacher l'événement au bouton de rafraîchissement
+            const refreshButton = factElement.querySelector('.refresh');
+            refreshButton.onclick = loadChuckNorrisFact;
+            
+            console.log(`Citation ${currentNumber}/${total} affichée:`, fact.substring(0, 50) + '...');
+        }
+
         // ===================================================================
         // FONCTIONNALITÉS DE RECHERCHE
         // ===================================================================
@@ -449,48 +655,6 @@
         setInterval(updateDateTime, 1000);
 
         // ===================================================================
-        // GESTION DES CITATIONS CHUCK NORRIS
-        // ===================================================================
-        
-        async function loadChuckNorrisFacts() {
-            try {
-                // D'abord essayer de charger depuis le fichier externe
-                const response = await fetch('ChuckNorrisFacts.txt');
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP: ${response.status}`);
-                }
-                
-                const text = await response.text();
-                const facts = text.split('%').filter(fact => fact.trim() !== '');
-                
-                if (facts.length === 0) {
-                    throw new Error('Aucune citation trouvée dans le fichier');
-                }
-                
-                // Sélectionner une citation aléatoire
-                const randomIndex = Math.floor(Math.random() * facts.length);
-                const randomFact = facts[randomIndex].trim();
-                
-                // Afficher la citation
-                displayFact(randomFact);
-                
-            } catch (error) {
-                console.error('Erreur lors du chargement des citations Chuck Norris:', error);
-                // En cas d'erreur, utiliser les citations intégrées
-                const randomIndex = Math.floor(Math.random() * ChuckNorrisFacts.length);
-                displayFact(ChuckNorrisFacts[randomIndex]);
-            }
-        }
-
-        function displayFact(fact) {
-            const factElement = document.getElementById('chuck-norris-fact');
-            factElement.innerHTML = `<button class="refresh" title="Nouvelle citation">↻</button><p>${fact}</p>`;
-            
-            // Ajouter l'événement sur le bouton de rafraîchissement
-            factElement.querySelector('.refresh').addEventListener('click', loadChuckNorrisFacts);
-        }
-
-        // ===================================================================
         // GESTION DES FLUX RSS
         // ===================================================================
         
@@ -589,7 +753,7 @@
         
         // Charger les citations Chuck Norris et les flux RSS au chargement de la page
         document.addEventListener('DOMContentLoaded', () => {
-            loadChuckNorrisFacts();
+            loadChuckNorrisFact();
             loadAndDisplayFeeds();
         });
     </script>
