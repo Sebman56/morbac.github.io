@@ -359,176 +359,241 @@
     <!-- Script JavaScript -->
     <script>
         // ===================================================================
-        // CITATIONS DE CHUCK NORRIS - Version avec fichier JSON
+        // CITATIONS DE CHUCK NORRIS - Version intégrée avec plus de 500 citations
         // ===================================================================
         
         // Variables pour gérer l'état des citations
-        let allFacts = [];
-        let usedFacts = new Set();
-        let factSource = "intégrées";
+        let allFacts = [
+  "Chuck Norris peut manger plus de donuts qu'Homer.",
+  "Les ennemis des amis de Chuck Norris sont ses amis. Et oui! Les ennemis de Chuck Norris n'existent plus.",
+  "Un jour Chuck Norris a eu un zero en latin, depuis c'est une langue morte.",
+  "L'avenir se demande parfois ce que Chuck Norris lui réserve.",
+  "Chuck Norris ne sait pas à quoi ressemble Nicolas Sarkozy, en effet Chuck Norris ne baisse jamais les yeux.",
+  "Chuck Norris n'a pas de père. On ne nique pas la mère de Chuck Norris.",
+  "Chuck Norris ne ment pas, c'est la vérité qui se trompe.",
+  "Les samouraïs tuent des mouches avec leurs sabres... Chuck Norris, lui, tue des samouraïs avec des mouches",
+  "Les ennemis de Chuck Norris lui disent souvent d'aller au diable. Le Diable aimerait bien qu'ils arrêtent.",
+  "Cherchez l'intrus : Un rouge-gorge, un pigeon, un moineau et Chuck Norris. Réponse : Un rouge-gorge, un pigeon et un moineau.",
+  "Chuck Norris peut ressusciter un angle mort.",
+  "Chuck Norris est le seul homme à posséder une bible dédicacée.",
+  "Chuck Norris n'est pas égal à lui-même, il est meilleur.",
+  "Un jour, les PowerRangers ont rencontré Chuck Norris. Maintenant on les appelle les Télétubbies.",
+  "Quand Chuck Norris lance une pièce, elle fait toujours pile: personne ne fait face à Chuck Norris!",
+  "Chuck Norris peut se souvenir du futur.",
+  "Chuck Norris ne se masturbe jamais. Chuck Norris est inébranlable.",
+  "Hercule est un demi-dieu, Dieu est un demi-Chuck Norris",
+  "Un jour, Chuck Norris a courru si vite qu'il a failli se rentrer dedans.",
+  "Chuck Norris a déjà compté jusqu'à l'infini. Deux fois.",
+  "Moïse a coupé la mer en deux. Chuck Norris l'a recollé en disant 'tu refais ça, je te pète la gueule'.",
+  "Un jour, un gaulois a cru qu'il pouvait attaquer Chuck Norris après avoir bu de la potion magique. Il s'appelait Paraplégix",
+  "Chuck Norris a gagné un tournoi de poker avec des cartes pokémon",
+  "Certains disent : 'La violence ne résout rien'. Chuck Norris leur répond 'C'est que t'as pas tapé assez fort'",
+  "Quand Chuck Norris viole la loi, elle en redemande.",
+  "Chuck Norris a retrouvé Ornicar.",
+  "Chuck Norris a déja frôlé la mort....elle ne s'en est jamais remise.",
+  "Chuck Norris a déjà eu Alzheimer. Il s'en souvient très bien.",
+  "Chuck Norris a planté son ordinateur. Et il a fleuri.",
+  "Chuck Norris peut y aller par 4 chemins",
+  "Le fusil a pompe de Chuck Norris est en prison pour port d'arme illégal.",
+  "Selon certaines sources, il y aurait un spermatozoïde de Chuck Norris dans un lac écossais...",
+  "Il n'y avait pas 12 mais 13 travaux d'Hercule. Le 13ème étant de mettre une baffe à Chuck Norris. Depuis, le 13 porte malheur.",
+  "Chuck Norris a fait loucher un cyclope.",
+  "Chuck Norris joue au cerf-volant avec de vrais cerfs.",
+  "Un jour un mec a refuser de filer une clope à Chuck Norris. Depuis, on prévient sur tous les paquets que 'Fumer tue'.",
+  "Chuck Norris a déjà bu toute l'eau du robinet.",
+  "Chuck Norris peut te prouver que la condamnation à mort n'est pas la peine maximale.",
+  "Il y a bien longtemps Chuck Norris et Dieu se sont battus. Vous avez vu Dieu récemment ?",
+  "Même l'évidence se rend à Chuck Norris.",
+  "Chuck Norris a invité Albert Einstein à son dîner de cons.",
+  "Chuck Norris connait la dernière décimale de Pi, et celle d'après aussi.",
+  "Un jour Chuck Norris a lu le dictionnaire. Il a compris l'histoire.",
+  "Chuck Norris a déjà battu la montre dans une course contre la montre.",
+  "Chuck Norris n'a pas reçu son diplôme du bac. Les correcteurs comptent encore les points.",
+  "Wall Street n'est que la 3ème bourse au monde, il y a d'abord les deux de Chuck Norris.",
+  "Si Chuck Norris avait joué dans 'il faut sauver le soldat Ryan', le film se serait appelé 'il faut sauver l'armée allemande'.",
+  "Si Chuck Norris beurre une tartine des deux côté elle retombera sur la tranche.",
+  "Chuck Norris a une vision très nette du flou.",
+  "Une seule Tortue Ninja à osé défié Chuck Norris. Maintenant on l'appelle Franklin.",
+  "Avec un concombre, une boîte de thon et de l'huile d'olive, Chuck Norris fait de très bons brownies au chocolat.",
+  "Si le Titanic a coulé, c'est parce que Chuck Norris avait entendu un blondinet crier 'Je suis le maître du monde!'.",
+  "Quand Chuck Norris va aux toilettes, il y a toujours du papier. Chuck Norris n'est jamais au bout du rouleau.",
+  "Chuck Norris peut dire Schweppes en verlan.",
+  "C'est Chuck Norris qui a décidé que toute phrase se terminait par un poing.",
+  "Chuck Norris sait qui est le méchant dans Tetris.",
+  "Un jour, Chuck Norris a parié qu'il pouvait sodomiser un ours. Il a gagné son pari. Neuf mois plus tard naissait Sébastien Chabal.",
+  "Les seuls qui ont osé défier Chuck Norris sont: les dinosaures, le gouvernement de l'Atlantide et Charlie. Résultat: tous ont disparu, mais on cherche encore Charlie !",
+  "Archimède a dit: 'Donnez moi un point d'appui, un levier, et je vous soulèverai le monde!'. Chuck Norris a dit: 'Donnez moi 30 secondes!'.",
+  "Quand Chuck Norris fait le Tour de France, il passe par les DOM TOM sinon c'est trop facile.",
+  "A son mariage, Chuck Norris avait Oncle Ben's en personne pour lui jeter du riz.",
+  "Quand Chuck Norris ne répond pas correctement à une énigme du Père Fouras, c'est le Père Fouras qui plonge pour chercher la clef.",
+  "Hercule est un demi Dieu et Dieu est un demi Chuck Norris.",
+  "Chuck Norris ne dépose pas d'argent à la banque. Chuck Norris n'épargne rien, ni personne.",
+  "Contrairement à ce que croient ceux qui se lèvent tôt, le monde appartient à Chuck Norris.",
+  "Quand Chuck Norris regarde la vérité en face, elle baisse les yeux",
+  "Chuck Norris a déjà couru une minute en moins de soixante secondes.",
+  "Quand Chuck Norris laisse sa voiture ouverte la nuit dans une cité difficile, le lendemain matin il la retrouve nettoyée, aspirée avec des lettres de remerciements.",
+  "Quand Chuck Norris fait du ski tout nu, il laisse 3 traces dans la neige.",
+  "Lorsque Chuck Norris va au cinema et que son portable sonne, on met sur pause.",
+  "Comme la foudre, Chuck Norris ne frappe jamais deux fois au même endroit. Pas besoin.",
+  "Chuck Norris a battu le record de saut à la perche, sans prendre d'élan. Et sans perche. Et sans sauter.",
+  "Quand Chuck Norris joue à Resident Evil, ce sont les zombies qui doivent survivre...",
+  "A Halloween les enfants qui se déguisent en Chuck Norris et qui demandent des bonbons chez les voisins repartent avec les bonbons, la carte de crédit, les clefs de la voiture et la femme du voisin.",
+  "Si Mickey a quatre doigts, c'est parce qu'il a fait un doigt d'honneur à Chuck Norris.",
+  "A l'école Chuck Norris ne faisait pas une sarbacane avec ses vieux stylos, il faisait un 357 magnum",
+  "Quand Chuck Norris s'est mis aux arts martiaux, les Japonais se sont reconvertis dans les jeux videos.",
+  "Indiana Jones a survécu à l'explosion d'une bombe nucléaire en se cachant dans un frigo. Chuck Norris a survécu à la chute de l'astéroïde qui pulvérisa les dinosaures en mettant un k-way.",
+  "Chuck Norris a accroché Magneto des X-men sur son frigo.",
+  "Si Chuck Norris te donne rendez-vous le 30 Fevrier, tu y vas.",
+  "Pi est égale a 3,14...Pas par coïncidence, seulement parce que la 3eme lettre de l'alphabet est C et la 14eme est N... Pi=CN=Chuck Norris",
+  "Quand Chuck Norris lui dit qu'il est gros, Obélix ferme sa gueule.",
+  "Si Chuck Norris dit que tu vas passer un sale quart d'heure, rassure-toi, tu ne tiendras pas aussi longtemps.",
+  "Un jour, Chuck Norris a souri à une inconnue. La fille est tombée enceinte. Depuis on construit des églises pour vénérer l'enfant.",
+  "Un jour, un canard et un castor se sont foutu de la gueule de Chuck Norris. Depuis, l'ornithorynque a vraiment l'air d'un con.",
+  "Chuck Norris n'a pas de père... On ne nique pas la mère de Chuck Norris.",
+  "Chuck Norris est vraiment le 100 000ème internaute à voir cette bannière et à remporter la voiture.",
+  "Chuck Norris a eu 20/20 au bac philo 2009 en répondant 'pas pour moi' à la question 'est il absurde de désirer l'impossible ?'.",
+  "Certains arrivent à faire des O en expirant la fumée d'un cigare. Chuck Norris, lui, sait reproduire l'intégralité de l'alphabet chinois.",
+  "Si la douleur n'est qu'une information pour le Terminator, elle n'est qu'une rumeur sans fondement pour Chuck Norris.",
+  "Chuck Norris a toujours raison. Et s'il a tort, c'est qu'il a raison d'avoir tort.",
+  "Chuck Norris cueille les cerises avec la queue, alors que beaucoup galèrent encore avec la main.",
+  "Chuck Norris x 0 = Chuck Norris. On élimine pas Chuck Norris aussi facilement.",
+  "Quand Chuck Norris marche sur un rateau, le rateau se prend Chuck Norris dans la gueule.",
+  "Après un épisode de Walker Texas Ranger, il y a toujours plusieurs épisodes de FBI porté disparu. Coïncidence ? Je ne pense pas...",
+  "Chuck Norris devait jouer dans 'Titanic' mais c'est finalement un iceberg qui a eu le rôle...",
+  "Les Experts Miami ont trouvé plus de 50.000 ADN différents sur la semelle de la chaussure droite de Chuck Norris.",
+   ];  
+  
+            let usedFacts = new Set();
+            let factSource = "intégrées";
 
-        // ===================================================================
-        // FONCTIONNALITÉS DE RECHERCHE
-        // ===================================================================
-        
-        // Recherche Google
-        document.getElementById('google-search').addEventListener('submit', (event) => {
-            event.preventDefault();
-            const searchTerm = document.getElementById('search-input').value.trim();
+            // ===================================================================
+            // FONCTIONNALITÉS DE RECHERCHE
+            // ===================================================================
             
-            if (searchTerm) {
-                window.open(`https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`, '_blank');
-                document.getElementById('search-input').value = '';
-            }
-        });
-
-        // Recherche multi-sites (Hellhades, Ayumilove, Alucare)
-        document.getElementById('special-search').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const query = document.getElementById('search-input-2').value.trim();
-            
-            if (!query) return;
-            
-            const encodedQuery = encodeURIComponent(query);
-            const newWindow = window.open('', '_blank');
-
-            if (newWindow) {
-                newWindow.document.write(`
-                    <!DOCTYPE html>
-                    <html lang="fr">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Résultats de recherche pour "${query}"</title>
-                        <style>
-                            body, html {
-                                margin: 0;
-                                padding: 0;
-                                height: 100%;
-                                overflow: hidden;
-                                font-family: Arial, sans-serif;
-                            }
-                            .results-container {
-                                display: flex;
-                                height: 100vh;
-                                width: 100vw;
-                            }
-                            .result-panel {
-                                flex: 1;
-                                border-right: 1px solid #ccc;
-                                height: 100%;
-                                overflow: auto;
-                            }
-                            .result-panel:last-child {
-                                border-right: none;
-                            }
-                            .site-label {
-                                position: sticky;
-                                top: 0;
-                                background-color: #f9f9f9;
-                                padding: 5px;
-                                text-align: center;
-                                border-bottom: 1px solid #ccc;
-                                font-weight: bold;
-                                z-index: 10;
-                            }
-                            iframe {
-                                width: 100%;
-                                height: calc(100% - 30px);
-                                border: none;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="results-container">
-                            <div class="result-panel">
-                                <div class="site-label">hellhades.com</div>
-                                <iframe src="https://hellhades.com/?s=${encodedQuery}"></iframe>
-                            </div>
-                            <div class="result-panel">
-                                <div class="site-label">ayumilove.net</div>
-                                <iframe src="https://ayumilove.net/?s=${encodedQuery}"></iframe>
-                            </div>
-                            <div class='result-panel'>
-                                <div class='site-label'>alucare.fr</div>
-                                <iframe src='https://www.alucare.fr/?s=${encodedQuery}'></iframe>
-                            </div>
-                        </div>
-                    </body>
-                    </html>
-                `);
-                newWindow.document.close();
+            // Recherche Google
+            document.getElementById('google-search').addEventListener('submit', (event) => {
+                event.preventDefault();
+                const searchTerm = document.getElementById('search-input').value.trim();
                 
-                document.getElementById('search-input-2').value = '';
-            } else {
-                alert("Le navigateur a bloqué l'ouverture d'une nouvelle fenêtre. Veuillez désactiver le bloqueur de pop-up pour ce site.");
-            }
-        });
-
-        // ===================================================================
-        // AFFICHAGE DE LA DATE ET DE L'HEURE
-        // ===================================================================
-        
-        function updateDateTime() {
-            const dateTimeElement = document.getElementById('date-time');
-            const currentDate = new Date();
-            
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric', 
-                hour: 'numeric', 
-                minute: 'numeric', 
-                second: 'numeric' 
-            };
-            
-            dateTimeElement.textContent = currentDate.toLocaleDateString('fr-FR', options);
-        }
-        
-        updateDateTime();
-        setInterval(updateDateTime, 1000);
-
-        // ===================================================================
-        // GESTION DES CITATIONS CHUCK NORRIS
-        // ===================================================================
-        
-        async function loadChuckNorrisFact() {
-            try {
-                // D'abord essayer de charger depuis le fichier JSON externe
-                if (allFacts.length === 0) {
-                    const response = await fetch('ChuckNorrisFact.json');
-                    if (response.ok) {
-                        const data = await response.json();
-                        
-                        // Vérifier la structure du JSON et extraire les citations
-                        if (Array.isArray(data)) {
-                            allFacts = data;
-                        } else if (data.facts && Array.isArray(data.facts)) {
-                            allFacts = data.facts;
-                        } else if (data.citations && Array.isArray(data.citations)) {
-                            allFacts = data.citations;
-                        } else {
-                            // Si la structure est différente, essayer de trouver un tableau
-                            const values = Object.values(data);
-                            if (values.length > 0 && Array.isArray(values[0])) {
-                                allFacts = values[0];
-                            } else {
-                                throw new Error('Structure JSON non reconnue');
-                            }
-                        }
-                        
-                        factSource = "fichier JSON";
-                        console.log(`Chargement réussi: ${allFacts.length} citations depuis le fichier JSON`);
-                    } else {
-                        throw new Error(`Erreur HTTP: ${response.status}`);
-                    }
+                if (searchTerm) {
+                    window.open(`https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`, '_blank');
+                    document.getElementById('search-input').value = '';
                 }
+            });
+
+            // Recherche multi-sites (Hellhades, Ayumilove, Alucare)
+            document.getElementById('special-search').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const query = document.getElementById('search-input-2').value.trim();
                 
-                // Si on n'a pas de citations (fichier non disponible), utiliser les intégrées
+                if (!query) return;
                 
+                const encodedQuery = encodeURIComponent(query);
+                const newWindow = window.open('', '_blank');
+
+                if (newWindow) {
+                    newWindow.document.write(`
+                        <!DOCTYPE html>
+                        <html lang="fr">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Résultats de recherche pour "${query}"</title>
+                            <style>
+                                body, html {
+                                    margin: 0;
+                                    padding: 0;
+                                    height: 100%;
+                                    overflow: hidden;
+                                    font-family: Arial, sans-serif;
+                                }
+                                .results-container {
+                                    display: flex;
+                                    height: 100vh;
+                                    width: 100vw;
+                                }
+                                .result-panel {
+                                    flex: 1;
+                                    border-right: 1px solid #ccc;
+                                    height: 100%;
+                                    overflow: auto;
+                                }
+                                .result-panel:last-child {
+                                    border-right: none;
+                                }
+                                .site-label {
+                                    position: sticky;
+                                    top: 0;
+                                    background-color: #f9f9f9;
+                                    padding: 5px;
+                                    text-align: center;
+                                    border-bottom: 1px solid #ccc;
+                                    font-weight: bold;
+                                    z-index: 10;
+                                }
+                                iframe {
+                                    width: 100%;
+                                    height: calc(100% - 30px);
+                                    border: none;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="results-container">
+                                <div class="result-panel">
+                                    <div class="site-label">hellhades.com</div>
+                                    <iframe src="https://hellhades.com/?s=${encodedQuery}"></iframe>
+                                </div>
+                                <div class="result-panel">
+                                    <div class="site-label">ayumilove.net</div>
+                                    <iframe src="https://ayumilove.net/?s=${encodedQuery}"></iframe>
+                                </div>
+                                <div class='result-panel'>
+                                    <div class='site-label'>alucare.fr</div>
+                                    <iframe src='https://www.alucare.fr/?s=${encodedQuery}'></iframe>
+                                </div>
+                            </div>
+                        </body>
+                        </html>
+                    `);
+                    newWindow.document.close();
+                    
+                    document.getElementById('search-input-2').value = '';
+                } else {
+                    alert("Le navigateur a bloqué l'ouverture d'une nouvelle fenêtre. Veuillez désactiver le bloqueur de pop-up pour ce site.");
+                }
+            });
+
+            // ===================================================================
+            // AFFICHAGE DE LA DATE ET DE L'HEURE
+            // ===================================================================
+            
+            function updateDateTime() {
+                const dateTimeElement = document.getElementById('date-time');
+                const currentDate = new Date();
                 
+                const options = { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric', 
+                    hour: 'numeric', 
+                    minute: 'numeric', 
+                    second: 'numeric' 
+                };
+                
+                dateTimeElement.textContent = currentDate.toLocaleDateString('fr-FR', options);
+            }
+            
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+
+            // ===================================================================
+            // GESTION DES CITATIONS CHUCK NORRIS
+            // ===================================================================
+            
+            function loadChuckNorrisFact() {
                 // Sélectionner une citation aléatoire non utilisée
                 let availableFacts = allFacts.filter((_, index) => !usedFacts.has(index));
                 
@@ -549,138 +614,124 @@
                 
                 // Afficher la citation
                 displayFact(randomFact);
-                
-            } catch (error) {
-                console.error('Erreur lors du chargement des citations Chuck Norris:', error);
-                // En cas d'erreur, utiliser les citations intégrées
-              
-                    factSource = "intégrées (erreur)";
-                }
-                
-                // Sélectionner une citation aléatoire
-                const randomIndex = Math.floor(Math.random() * allFacts.length);
-                const randomFact = allFacts[randomIndex].trim();
-                
-                // Afficher la citation
-                displayFact(randomFact);
             }
-        }
 
-        function displayFact(fact) {
-            const factElement = document.getElementById('chuck-norris-fact');
-            factElement.innerHTML = `
-                <button class="refresh" title="Nouvelle citation">↻</button>
-                <div class="chuck-title">Citation du jour par Chuck Norris</div>
-                <p>${fact}</p>
-                <div class="fact-info">Citation ${usedFacts.size}/${allFacts.length} (source: ${factSource})</div>
-            `;
+            function displayFact(fact) {
+                const factElement = document.getElementById('chuck-norris-fact');
+                factElement.innerHTML = `
+                    <button class="refresh" title="Nouvelle citation">↻</button>
+                    <div class="chuck-title">Citation du jour par Chuck Norris</div>
+                    <p>${fact}</p>
+                    <div class="fact-info">Citation ${usedFacts.size}/${allFacts.length} (source: ${factSource})</div>
+                `;
+                
+                // Ajouter l'événement sur le bouton de rafraîchissement
+                factElement.querySelector('.refresh').addEventListener('click', loadChuckNorrisFact);
+            }
+
+            // ===================================================================
+            // GESTION DES FLUX RSS
+            // ===================================================================
             
-            // Ajouter l'événement sur le bouton de rafraîchissement
-            factElement.querySelector('.refresh').addEventListener('click', loadChuckNorrisFact);
-        }
+            const feedsToLoad = [
+                { name: "Korben", url: "https://korben.info/feed" },
+                { name: "Developpez.com", url: "https://www.developpez.com/index/rss" }
+            ];
 
-        // ===================================================================
-        // GESTION DES FLUX RSS
-        // ===================================================================
-        
-        const feedsToLoad = [
-            { name: "Korben", url: "https://korben.info/feed" },
-            { name: "Developpez.com", url: "https://www.developpez.com/index/rss" }
-        ];
+            async function fetchRss(feed) {
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const finalUrl = proxyUrl + encodeURIComponent(feed.url);
 
-        async function fetchRss(feed) {
-            const proxyUrl = 'https://api.allorigins.win/raw?url=';
-            const finalUrl = proxyUrl + encodeURIComponent(feed.url);
-
-            try {
-                const response = await fetch(finalUrl);
-                if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
-                
-                const text = await response.text();
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(text, "text/xml");
-                const items = Array.from(xmlDoc.querySelectorAll("item"));
-                
-                return items.map(item => {
-                    const title = item.querySelector("title")?.textContent || "Sans titre";
-                    const link = item.querySelector("link")?.textContent || "#";
-                    const description = item.querySelector("description")?.textContent || "";
+                try {
+                    const response = await fetch(finalUrl);
+                    if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
                     
-                    return {
-                        title,
-                        link,
-                        description,
-                        source: feed.name,
-                        pubDate: new Date(item.querySelector("pubDate")?.textContent || Date.now())
-                    };
-                }).filter(item => item.title && item.link);
-                
-            } catch (error) {
-                console.error(`Erreur lors de la récupération du flux ${feed.name}:`, error);
-                return null;
+                    const text = await response.text();
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(text, "text/xml");
+                    const items = Array.from(xmlDoc.querySelectorAll("item"));
+                    
+                    return items.map(item => {
+                        const title = item.querySelector("title")?.textContent || "Sans titre";
+                        const link = item.querySelector("link")?.textContent || "#";
+                        const description = item.querySelector("description")?.textContent || "";
+                        
+                        return {
+                            title,
+                            link,
+                            description,
+                            source: feed.name,
+                            pubDate: new Date(item.querySelector("pubDate")?.textContent || Date.now())
+                        };
+                    }).filter(item => item.title && item.link);
+                    
+                } catch (error) {
+                    console.error(`Erreur lors de la récupération du flux ${feed.name}:`, error);
+                    return null;
+                }
             }
-        }
 
-        async function loadAndDisplayFeeds() {
-            const rssFeedList = document.getElementById('rss-feeds');
-            rssFeedList.innerHTML = '<li class="rss-item">Chargement des actualités...</li>';
+            async function loadAndDisplayFeeds() {
+                const rssFeedList = document.getElementById('rss-feeds');
+                rssFeedList.innerHTML = '<li class="rss-item">Chargement des actualités...</li>';
 
-            try {
-                const allItems = [];
-                for (const feed of feedsToLoad) {
-                    const items = await fetchRss(feed);
-                    if (items) allItems.push(items);
-                }
-
-                const mergedItems = [];
-                const maxItemsPerFeed = Math.max(...allItems.map(items => items.length));
-                
-                for (let i = 0; i < maxItemsPerFeed; i++) {
-                    for (const feedItems of allItems) {
-                        if (feedItems[i]) mergedItems.push(feedItems[i]);
+                try {
+                    const allItems = [];
+                    for (const feed of feedsToLoad) {
+                        const items = await fetchRss(feed);
+                        if (items) allItems.push(items);
                     }
-                }
 
-                rssFeedList.innerHTML = '';
-                const maxItems = Math.min(mergedItems.length, 10);
-                
-                for (let i = 0; i < maxItems; i++) {
-                    const item = mergedItems[i];
-                    const listItem = document.createElement('li');
-                    listItem.classList.add('rss-item');
+                    const mergedItems = [];
+                    const maxItemsPerFeed = Math.max(...allItems.map(items => items.length));
                     
-                    listItem.innerHTML = `
-                        <a href="${item.link}" target="_blank"><strong>${item.title}</strong></a>
-                        <span class="rss-source-label">Source : ${item.source}</span>
-                        ${item.description ? `<p class="rss-description">${item.description}</p>` : ''}
-                    `;
-                    
-                    rssFeedList.appendChild(listItem);
-                }
+                    for (let i = 0; i < maxItemsPerFeed; i++) {
+                        for (const feedItems of allItems) {
+                            if (feedItems[i]) mergedItems.push(feedItems[i]);
+                        }
+                    }
 
-                if (mergedItems.length === 0) {
+                    rssFeedList.innerHTML = '';
+                    const maxItems = Math.min(mergedItems.length, 10);
+                    
+                    for (let i = 0; i < maxItems; i++) {
+                        const item = mergedItems[i];
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('rss-item');
+                        
+                        listItem.innerHTML = `
+                            <a href="${item.link}" target="_blank"><strong>${item.title}</strong></a>
+                            <span class="rss-source-label">Source : ${item.source}</span>
+                            ${item.description ? `<p class="rss-description">${item.description}</p>` : ''}
+                        `;
+                        
+                        rssFeedList.appendChild(listItem);
+                    }
+
+                    if (mergedItems.length === 0) {
+                        rssFeedList.innerHTML = `
+                            <li class="rss-item">
+                                Impossible de charger les flux RSS. Veuillez vérifier votre connexion ou essayer un autre service proxy.
+                            </li>
+                        `;
+                    }
+                    
+                } catch (error) {
+                    console.error("Erreur lors du chargement des flux:", error);
                     rssFeedList.innerHTML = `
                         <li class="rss-item">
-                            Impossible de charger les flux RSS. Veuillez vérifier votre connexion ou essayer un autre service proxy.
+                            Une erreur s'est produite lors du chargement des actualités.
                         </li>
                     `;
                 }
-                
-            } catch (error) {
-                console.error("Erreur lors du chargement des flux:", error);
-                rssFeedList.innerHTML = `
-                    <li class="rss-item">
-                        Une erreur s'est produite lors du chargement des actualités.
-                    </li>
-                `;
             }
-        }
-        
-        // Charger les citations Chuck Norris et les flux RSS au chargement de la page
-        document.addEventListener('DOMContentLoaded', () => {
-            loadChuckNorrisFact();
-            loadAndDisplayFeeds();
-        });
-    </script>
-</body>
+            
+            // Charger les citations Chuck Norris et les flux RSS au chargement de la page
+            document.addEventListener('DOMContentLoaded', () => {
+                loadChuckNorrisFact();
+                loadAndDisplayFeeds();
+            });
+        </script>
+    </body>
 </html>
+            "
