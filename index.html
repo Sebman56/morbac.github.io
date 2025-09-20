@@ -455,7 +455,7 @@
         async function loadChuckNorrisFact() {
             try {
                 // D'abord essayer de charger depuis le fichier externe
-                const response = await fetch('ChuckNorrisFact-purifie.txt');
+                const response = await fetch('ChuckNorrisFact.txt');
                 if (!response.ok) {
                     throw new Error(`Erreur HTTP: ${response.status}`);
                 }
