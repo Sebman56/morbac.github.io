@@ -452,7 +452,7 @@
         // GESTION DES CITATIONS CHUCK NORRIS
         // ===================================================================
         
-        async function loadChuckNorrisFact() {
+        async function loadChuckNorrisFacts() {
             try {
                 // D'abord essayer de charger depuis le fichier externe
                 const response = await fetch('ChuckNorrisFact.txt');
@@ -487,7 +487,7 @@
             factElement.innerHTML = `<button class="refresh" title="Nouvelle citation">↻</button><p>${fact}</p>`;
             
             // Ajouter l'événement sur le bouton de rafraîchissement
-            factElement.querySelector('.refresh').addEventListener('click', loadChuckNorrisFact);
+            factElement.querySelector('.refresh').addEventListener('click', loadChuckNorrisFacts);
         }
 
         // ===================================================================
@@ -589,7 +589,7 @@
         
         // Charger les citations Chuck Norris et les flux RSS au chargement de la page
         document.addEventListener('DOMContentLoaded', () => {
-            loadChuckNorrisFact();
+            loadChuckNorrisFacts();
             loadAndDisplayFeeds();
         });
     </script>
