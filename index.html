@@ -128,6 +128,29 @@
             height: 24px; /* Taille réduite des favicons */
         }
         
+        /* Section Chuck Norris */
+        #chuck-norris-fact {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff8e1;
+            border-left: 4px solid #ff8c00;
+            border-radius: 4px;
+            font-style: italic;
+            text-align: center;
+            position: relative;
+        }
+        
+        #chuck-norris-fact .refresh {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #d32f2f;
+        }
+        
         /* Section des flux RSS */
         #rss-feeds {
             width: 100%;
@@ -261,7 +284,7 @@
                     <a href="https://gemini.google.com/app" target="_blank" title="Twitter">
                         <img src="https://www.google.com/s2/favicons?sz=32&domain=gemini.com" alt="Twitter">
                     </a>
-                    <a href="https://fr.wikipedia.org/wiki/Wikip%C3%A9dia:Accueil_principal" target="_blank" title="Wikipedia">
+                    <a href="https://www.wikipedia.org" target="_blank" title="Wikipedia">
                         <img src="https://www.google.com/s2/favicons?sz=32&domain=wikipedia.org" alt="Wikipedia">
                     </a>
                     <a href="https://www.reddit.com" target="_blank" title="Reddit">
@@ -279,11 +302,17 @@
                         <img src="https://www.google.com/s2/favicons?sz=32&domain=meteocast.net" alt="Météo">
                     </a>
                     
-                    <a href="https://claude.ai/new" target="_blank" title="DeepSeek">
-                        <img src="https://www.google.com/s2/favicons?sz=32&domain=claude.ai" alt="DeepSeek">
+                    <a href="https://chat.deepseek.com/" target="_blank" title="DeepSeek">
+                        <img src="https://www.google.com/s2/favicons?sz=32&domain=deepseek.com" alt="DeepSeek">
                     </a>
                 </div>
             </div>
+        </div>
+        
+        <!-- Section Chuck Norris -->
+        <div id="chuck-norris-fact">
+            <button class="refresh" title="Nouvelle citation">↻</button>
+            <p>Chargement de la sagesse de Chuck Norris...</p>
         </div>
         
         <!-- Section des flux RSS -->
@@ -420,6 +449,48 @@
         setInterval(updateDateTime, 1000);
 
         // ===================================================================
+        // GESTION DES CITATIONS CHUCK NORRIS
+        // ===================================================================
+        
+        async function loadChuckNorrisFact() {
+            try {
+                // D'abord essayer de charger depuis le fichier externe
+                const response = await fetch('ChuckNorrisFact-purifie.txt');
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+                
+                const text = await response.text();
+                const facts = text.split('%').filter(fact => fact.trim() !== '');
+                
+                if (facts.length === 0) {
+                    throw new Error('Aucune citation trouvée dans le fichier');
+                }
+                
+                // Sélectionner une citation aléatoire
+                const randomIndex = Math.floor(Math.random() * facts.length);
+                const randomFact = facts[randomIndex].trim();
+                
+                // Afficher la citation
+                displayFact(randomFact);
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement des citations Chuck Norris:', error);
+                // En cas d'erreur, utiliser les citations intégrées
+                const randomIndex = Math.floor(Math.random() * chuckNorrisFacts.length);
+                displayFact(chuckNorrisFacts[randomIndex]);
+            }
+        }
+
+        function displayFact(fact) {
+            const factElement = document.getElementById('chuck-norris-fact');
+            factElement.innerHTML = `<button class="refresh" title="Nouvelle citation">↻</button><p>${fact}</p>`;
+            
+            // Ajouter l'événement sur le bouton de rafraîchissement
+            factElement.querySelector('.refresh').addEventListener('click', loadChuckNorrisFact);
+        }
+
+        // ===================================================================
         // GESTION DES FLUX RSS
         // ===================================================================
         
@@ -516,7 +587,11 @@
             }
         }
         
-        document.addEventListener('DOMContentLoaded', loadAndDisplayFeeds);
+        // Charger les citations Chuck Norris et les flux RSS au chargement de la page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadChuckNorrisFact();
+            loadAndDisplayFeeds();
+        });
     </script>
 </body>
 </html>
