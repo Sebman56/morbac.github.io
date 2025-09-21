@@ -620,8 +620,7 @@
                 factElement.innerHTML = `
                     <button class="refresh" title="Nouvelle citation">↻</button>
                     <p>${fact}</p>
-                    <div class="fact-info">Citation ${usedFacts.size}/${allFacts.length} (source: ${factSource})</div>
-                `;
+                    `;
                 
                 // Ajouter l'événement sur le bouton de rafraîchissement
                 factElement.querySelector('.refresh').addEventListener('click', loadChuckNorrisFact);
